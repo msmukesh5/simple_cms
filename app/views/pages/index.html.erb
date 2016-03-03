@@ -1,9 +1,4 @@
-<% if !flash[:notice].blank? %>
-  <div class="notice">
-    <%= flash[:notice] %>
-  </div>
-<% end %>
-
+<% @page_title = "Pages" %>
 <div class="pages index">
   <h2>Pages</h2>
 
@@ -20,7 +15,7 @@
       <th>Actions</th>
     </tr>
     <% @pages.each do |page| %>
-    <tr>
+    <tr class="<%= cycle('odd','even') %>">
       <td><%= page.position %></td>
       <td><%= page.subject_id %></td>
       <td><%= page.name %></td>
