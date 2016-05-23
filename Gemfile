@@ -21,6 +21,12 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
+# gem 'icalendar', '~> 1.x'
+gem 'twisted-caldav', :github => 'msmukesh5/twisted-caldav', :branch => 'upgrade_ical'
+# gem 'icalendar', '~> 2.x'
+
+# gem 'agcaldav', :github => 'msmukesh5/agcaldav'
+# gem 'caldav-icloud'
 # gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Use ActiveModel has_secure_password
