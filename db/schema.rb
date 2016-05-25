@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160224091340) do
+ActiveRecord::Schema.define(version: 20160524053329) do
 
   create_table "admin_user_pages", id: false, force: :cascade do |t|
     t.integer "admin_user_id", limit: 4
@@ -72,5 +72,10 @@ ActiveRecord::Schema.define(version: 20160224091340) do
   end
 
   add_index "subjects", ["id"], name: "index_subjects_on_id", using: :btree
+
+  create_table "users", force: :cascade do |t|
+    t.string "password",  limit: 255
+    t.string "epassword", limit: 255
+  end
 
 end

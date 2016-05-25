@@ -17,7 +17,7 @@ class Cryption
 		cipher = OpenSSL::Cipher::AES.new(128, :CBC)
 		cipher.encrypt
 		cipher.key = key
-		cipher.padding = 1
+		# cipher.padding = 1
 		# iv = cipher.random_iv
 		# Rails.logger.info "IV : #{iv}"
 		encrypted = cipher.update(data) + cipher.final
@@ -55,35 +55,53 @@ class Cryption
 
 
 	def self.encryption(data,key)
-		cipher = OpenSSL::Cipher::AES.new(256, :CBC)
+		iv = OpenSSL::Random.random_bytes(16)
+		cipher = OpenSSL::Cipher::AES.new(128, :CBC)
 		cipher.encrypt
 		cipher.key = key
+		cipher.iv = iv
 		cipher.padding = 1
 		encrypted = cipher.update(data) + cipher.final
-		puts "encrypt str : "+encrypted
-
-		encrypted
+		prepended = iv + encrypted
+		encoded_data = Base64.encode64(prepended)
+		puts "encrypt str : "+encrypted+ "encoded : #{encoded_data} : iv : #{iv}"
+		
+		encoded_data
 	end
 
-	def self.decryption(data,key)
-		decipher = OpenSSL::Cipher::AES.new(256, :CBC)
+	def self.decryption(iv,key,data)
+		decipher = OpenSSL::Cipher::AES.new(128, :CBC)
 		decipher.decrypt
 		decipher.key = key
 		decipher.padding = 1
-		# decipher.iv = iv
+		decipher.iv = iv
 		plain = decipher.update(data) + decipher.final
 
 		plain
 	end
 
 	def self.test
-		key = "12345678901234560000000000bncuebuscbscbsbcvb"
+		key = "1234567890123456"
 		data = "9876543210"
+		iv = "84e8c3ea8859a0e2"
 		m = encryption(data,key)
-		puts "m : #{m}"
-		d = decryption(m,key)
-		puts " d : #{d}"
+		u = User.new
+		u.password = data
+		u.epassword = m
+		u.save
+		u = User.last
+		ep = u.epassword
+		e = Base64.decode64(ep)
+		lim = e.length+1
+		d = decryption(e[0..15],key,e[16..lim])
+		puts "ep : #{e}, || d = #{d}"
+
+
+
+		# puts "m : #{m}"
+		# d = decryption(m,key)
+		# puts " d : #{d}"
 		
-		data == d
+		# data == d
 	end
 end
