@@ -3,7 +3,7 @@ require "base64"
 class Cryption
 
 	def self.crypt
-		key = "1234567890123456"
+		key = ">z2P$w)^R9xF182T"
 		data = "9876543210"
 		m = nil
 		f = File.open("/Users/Mukesh/workspace/helo/hello.txt", "r")
@@ -81,9 +81,9 @@ class Cryption
 	end
 
 	def self.test
-		key = "1234567890123456"
+		key = ">z2P$w)^R9xF182T"
 		data = "9876543210"
-		iv = "84e8c3ea8859a0e2"
+		puts key
 		m = encryption(data,key)
 		u = User.new
 		u.password = data
@@ -95,13 +95,7 @@ class Cryption
 		lim = e.length+1
 		d = decryption(e[0..15],key,e[16..lim])
 		puts "ep : #{e}, || d = #{d}"
-
-
-
-		# puts "m : #{m}"
-		# d = decryption(m,key)
-		# puts " d : #{d}"
 		
-		# data == d
+		data == d
 	end
 end
