@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+  get 'boot/index'
+
   root 'demo#index'
 
   match ':controller(/:action(/:id))', :via => [:get, :post]
